@@ -20,20 +20,27 @@ if [ -n "$RESOLUTION" ]; then
     sed -i "s/1024x768/$RESOLUTION/" /usr/local/bin/xvfb.sh
 fi
 
-USER=${USER:-root}
-HOME=/root
-if [ "$USER" != "root" ]; then
-    echo "* enable custom user: $USER"
-    useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USER
-    if [ -z "$PASSWORD" ]; then
-        echo "  set default password to \"ubuntu\""
-        PASSWORD=ubuntu
-    fi
-    HOME=/home/$USER
-    echo "$USER:$PASSWORD" | chpasswd
-    cp -r /root/{.gtkrc-2.0,.asoundrc} ${HOME}
-    [ -d "/dev/snd" ] && chgrp -R adm /dev/snd
-fi
+# USER=${USER:-root}
+# HOME=/root
+# if [ "$USER" != "root" ]; then
+#     echo "* enable custom user: $USER"
+#     useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USER
+#     if [ -z "$PASSWORD" ]; then
+#         echo "  set default password to \"ubuntu\""
+#         PASSWORD=ubuntu
+#     fi
+#     HOME=/home/$USER
+#     echo "$USER:$PASSWORD" | chpasswd
+#     cp -r /root/{.gtkrc-2.0,.asoundrc} ${HOME}
+#     [ -d "/dev/snd" ] && chgrp -R adm /dev/snd
+# fi
+PASSWORD=designsafeubuntu1234!!
+USER="ubuntu"
+echo "$USER:$PASSWORD" | chpasswd
+HOME=/home/$USER
+cp -r /root/{.gtkrc-2.0,.asoundrc} ${HOME}
+[ -d "/dev/snd" ] && chgrp -R adm /dev/snd
+chown -R $USER:$USER $HOME/.[^.]*
 sed -i -e "s|%USER%|$USER|" -e "s|%HOME%|$HOME|" /etc/supervisor/conf.d/supervisord.conf
 
 # home folder

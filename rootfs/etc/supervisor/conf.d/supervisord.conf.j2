@@ -84,3 +84,11 @@ priority=25
 directory=/usr/local/lib/web/frontend/static/novnc
 command=bash /usr/local/lib/web/frontend/static/novnc/utils/launch.sh --listen 6081
 stopasgroup=true
+
+{% if (process_name is defined) and (process_name is not none) %}
+{% include app.conf %}
+[eventlistener:exit]
+command=/kill.py
+process_name={{process_name}}
+events=PROCESS_STATE_EXITED
+{% endif %}

@@ -1,17 +1,20 @@
 .PHONY: build run
+.PHONY: build run prep
 
 # Default values for variables
-REPO  ?= dorowu/ubuntu-desktop-lxde-vnc
+REPO  ?= taccaci/ubuntu-desktop-lxde-vnc
 TAG   ?= latest
 # you can choose other base image versions
-IMAGE ?= ubuntu:18.04
+IMAGE ?= ubuntu:bionic
 # choose from supported flavors (see available ones in ./flavors/*.yml)
 FLAVOR ?= lxde
 # armhf or amd64
 ARCH ?= amd64
 
-# These files will be generated from teh Jinja templates (.j2 sources)
+# These files will be generated from the Jinja templates (.j2 sources)
 templates = Dockerfile rootfs/etc/supervisor/conf.d/supervisord.conf
+
+INCLUDES ?= ../includes
 
 # Rebuild the container image
 build: $(templates)
@@ -48,6 +51,11 @@ clean:
 extra-clean:
 	docker rmi $(REPO):$(TAG)
 	docker image prune -f
+
+prep:
+	# git submodule update
+	if [ -d "$(INCLUDES)" ]; then cp -r $(INCLUDES)/* .; fi
+	if [ -f "app.yml" ]; then cat app.yml >> flavors/$(FLAVOR).yml; fi
 
 # Run jinja2cli to parse Jinja template applying rules defined in the flavors definitions
 %: %.j2 flavors/$(FLAVOR).yml
