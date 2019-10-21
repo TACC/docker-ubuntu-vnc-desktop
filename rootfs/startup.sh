@@ -20,6 +20,10 @@ if [ -n "$RESOLUTION" ]; then
     sed -i "s/1024x768/$RESOLUTION/" /usr/local/bin/xvfb.sh
 fi
 
+if [ -n "$DISPLAY_SCREEN_DEPTH" ]; then
+    sed -i "s/x16/x$DISPLAY_SCREEN_DEPTH/" /usr/local/bin/xvfb.sh
+fi
+
 # USER=${USER:-root}
 # HOME=/root
 # if [ "$USER" != "root" ]; then
