@@ -45,9 +45,10 @@ sed -i -e "s|%USER%|$USER|" -e "s|%HOME%|$HOME|" /etc/supervisor/conf.d/supervis
 
 # home folder
 if [ ! -x "$HOME/.config/pcmanfm/LXDE/" ]; then
+    echo "* creating and configuring $HOME/.config/pcmanfm/LXDE/"
     mkdir -p $HOME/.config/pcmanfm/LXDE/
     ln -sf /usr/local/share/doro-lxde-wallpapers/desktop-items-0.conf $HOME/.config/pcmanfm/LXDE/
-    chown -R $USER:$USER $HOME
+    chown -R $USER:$USER $HOME/.config/pcmanfm/LXDE
 fi
 
 # nginx workers

@@ -6,10 +6,7 @@
 
 FROM ubuntu:18.04 as system
 
-
-
 RUN sed -i 's#http://archive.ubuntu.com/ubuntu/#mirror://mirrors.ubuntu.com/mirrors.txt#' /etc/apt/sources.list; 
-
 
 # built-in packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -19,7 +16,7 @@ RUN apt update \
     && apt install -y --no-install-recommends --allow-unauthenticated \
         supervisor nginx sudo net-tools zenity xz-utils \
         dbus-x11 x11-utils alsa-utils \
-        mesa-utils libgl1-mesa-dri \
+        mesa-utils libgl1-mesa-dri xterm \
     && apt autoclean -y \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
@@ -113,9 +110,17 @@ COPY rootfs /
 RUN ln -sf /usr/local/lib/web/frontend/static/websockify /usr/local/lib/web/frontend/static/novnc/utils/websockify && \
 	chmod +x /usr/local/lib/web/frontend/static/websockify/run
 
-EXPOSE 80
+EXPOSE 6080
 WORKDIR /root
 ENV HOME=/home/ubuntu \
     SHELL=/bin/bash
 HEALTHCHECK --interval=30s --timeout=5s CMD curl --fail http://127.0.0.1:6079/api/health
+
+RUN groupadd --gid 816877 G-816877
+RUN useradd --uid 458981 --create-home --shell /bin/bash --user-group --groups G-816877,adm,sudo ubuntu && chown ubuntu:G-816877 /home/ubuntu
+RUN usermod -g G-816877 ubuntu
+RUN mkdir -p /home/ubuntu/.config/pcmanfm/LXDE/ && cp /usr/local/share/doro-lxde-wallpapers/desktop-items-0.conf /home/ubuntu/.config/pcmanfm/LXDE/ && chown -R ubuntu:G-816877 /home/ubuntu/.config
+
+COPY kill.py /
+COPY application.sh /
 ENTRYPOINT ["/startup.sh"]
