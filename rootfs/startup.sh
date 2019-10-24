@@ -47,6 +47,12 @@ cp -r /root/{.gtkrc-2.0,.asoundrc} ${HOME}
 chown -R $USER:$USER $HOME/.[^.]*
 sed -i -e "s|%USER%|$USER|" -e "s|%HOME%|$HOME|" /etc/supervisor/conf.d/supervisord.conf
 
+# check for 'mydata' working directory
+if [ ! -x "$HOME/mydata/" ]; then
+    echo "* Not able to find $HOME/mydata/. Exiting."
+    exit 1
+fi
+
 # home folder
 if [ ! -x "$HOME/.config/pcmanfm/LXDE/" ]; then
     echo "* creating and configuring $HOME/.config/pcmanfm/LXDE/"
