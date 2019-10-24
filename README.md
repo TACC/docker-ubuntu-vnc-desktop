@@ -17,7 +17,7 @@ docker build -t taccaci/docker-ubuntu-vnc-desktop-application-base:latest .
 Run the docker container and access at http://127.0.0.1:6080/
 ```
 mkdir temp_my_data
-docker run -p 6080:80 -e RESOLUTION=1920x1080 -v temp_my_data:/home/ubuntu/mydata taccaci/docker-ubuntu-vnc-desktop-application-base:latest:latest
+docker run -p 6080:80 -v temp_my_data:/home/ubuntu/mydata taccaci/docker-ubuntu-vnc-desktop-application-base:latest:latest
 ```
 
 ### Run docker container on designsafe-exec-01

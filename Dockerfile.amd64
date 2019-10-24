@@ -121,6 +121,8 @@ RUN useradd --uid 458981 --create-home --shell /bin/bash --user-group --groups G
 RUN usermod -g G-816877 ubuntu
 RUN mkdir -p /home/ubuntu/.config/pcmanfm/LXDE/ && cp /usr/local/share/doro-lxde-wallpapers/desktop-items-0.conf /home/ubuntu/.config/pcmanfm/LXDE/ && chown -R ubuntu:G-816877 /home/ubuntu/.config
 
+ENV RESOLUTION="1280x800"
+
 COPY kill.py /
 COPY application.sh /
 ENTRYPOINT ["/startup.sh"]
