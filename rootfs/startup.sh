@@ -48,7 +48,7 @@ chown -R $USER:$USER $HOME/.[^.]*
 sed -i -e "s|%USER%|$USER|" -e "s|%HOME%|$HOME|" /etc/supervisor/conf.d/supervisord.conf
 
 # check for 'mydata' working directory
-if [ ! -x "$HOME/mydata/" ]; then
+if [ ! -d "$HOME/mydata/" ]; then
     echo "* Not able to find $HOME/mydata/. Exiting."
     exit 1
 fi
