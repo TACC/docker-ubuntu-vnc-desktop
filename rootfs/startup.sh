@@ -65,7 +65,7 @@ fi
 sed -i 's|worker_processes .*|worker_processes 1;|' /etc/nginx/nginx.conf
 
 # nginx ssl
-if [ -n "$SSL_PORT" ] && [ -e "/etc/nginx/ssl/nginx.key" ]; then
+if [ -n "$SSL_PORT" ]; then
     echo "* enable SSL"
 	sed -i 's|#_SSL_PORT_#\(.*\)443\(.*\)|\1'$SSL_PORT'\2|' /etc/nginx/sites-enabled/default
 	sed -i 's|#_SSL_PORT_#||' /etc/nginx/sites-enabled/default
