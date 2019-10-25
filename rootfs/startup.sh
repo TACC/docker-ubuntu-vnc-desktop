@@ -66,9 +66,14 @@ sed -i 's|worker_processes .*|worker_processes 1;|' /etc/nginx/nginx.conf
 
 # nginx ssl
 if [ -n "$SSL_PORT" ]; then
-    echo "* enable SSL"
-	sed -i 's|#_SSL_PORT_#\(.*\)443\(.*\)|\1'$SSL_PORT'\2|' /etc/nginx/sites-enabled/default
-	sed -i 's|#_SSL_PORT_#||' /etc/nginx/sites-enabled/default
+    if [ -e '/etc/nginx/ssl/designsafe-exec-01.tacc.utexas.edu.cer' -a -e '/etc/nginx/ssl/designsafe-exec-01.tacc.utexas.edu.key' ]; then
+        echo "* enabling SSL"
+    else
+	echo "enabling SSL failed as designsafe-exec-01.tacc.utexas.edu.cer and/or designsafe-exec-01.tacc.utexas.edu.key were not found!"
+	exit 1
+    fi
+    sed -i 's|#_SSL_PORT_#\(.*\)443\(.*\)|\1'$SSL_PORT'\2|' /etc/nginx/sites-enabled/default
+    sed -i 's|#_SSL_PORT_#||' /etc/nginx/sites-enabled/default
 fi
 
 # nginx http base authentication

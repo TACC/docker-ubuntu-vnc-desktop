@@ -10,14 +10,14 @@ Fork of https://github.com/fcwu/docker-ubuntu-vnc-desktop
 
 ### Build base image
 
-docker build -t taccaci/docker-ubuntu-vnc-desktop-application-base:latest .
+docker build -t taccaci/docker-ubuntu-vnc-desktop-application-base:TAG .
 
 ### Run docker container locally
 
 Run the docker container and access at http://127.0.0.1:6080/
 ```
 mkdir temp_my_data
-docker run -p 6080:80 -v temp_my_data:/home/ubuntu/mydata taccaci/docker-ubuntu-vnc-desktop-application-base:latest
+docker run -p 6080:80 -v temp_my_data:/home/ubuntu/mydata taccaci/docker-ubuntu-vnc-desktop-application-base:TAG
 ```
 
 ### Run docker container on designsafe-exec-01
@@ -28,7 +28,7 @@ Run the docker container and access with https://designsafe-exec-01.tacc.utexas.
 ```
 export port=59XX
 export AGAVE_JOB_OWNER=USER
-docker run -i --rm -p $port:6080 -e SSL_PORT=6080 -v "/corral-repl/tacc/NHERI/shared/$AGAVE_JOB_OWNER":"/home/ubuntu/mydata" -e VNC_PASSWORD=1234 -e RESOLUTION="1080x720" --name "base_image_test_$AGAVE_JOB_OWNER"   -v /etc/pki/tls/certs/designsafe-exec-01.tacc.utexas.edu.cer:/etc/nginx/ssl/designsafe-exec-01.tacc.utexas.edu.cer -v /etc/pki/tls/private/designsafe-exec-01.tacc.utexas.edu.key:/etc/nginx/ssl/designsafe-exec-01.tacc.utexas.edu.key taccaci/docker-ubuntu-vnc-desktop-application-base:latest
+docker run -i --rm -p $port:6080 -e SSL_PORT=6080 -v "/corral-repl/tacc/NHERI/shared/$AGAVE_JOB_OWNER":"/home/ubuntu/mydata" -e VNC_PASSWORD=1234 -e RESOLUTION="1080x720" --name "base_image_test_$AGAVE_JOB_OWNER"   -v /etc/pki/tls/certs/designsafe-exec-01.tacc.utexas.edu.cer:/etc/nginx/ssl/designsafe-exec-01.tacc.utexas.edu.cer -v /etc/pki/tls/private/designsafe-exec-01.tacc.utexas.edu.key:/etc/nginx/ssl/designsafe-exec-01.tacc.utexas.edu.key taccaci/docker-ubuntu-vnc-desktop-application-base:TAG
 ```
 
 ### Screen depth
