@@ -47,9 +47,9 @@ cp -r /root/{.gtkrc-2.0,.asoundrc} ${HOME}
 chown -R $USER:$USER $HOME/.[^.]*
 sed -i -e "s|%USER%|$USER|" -e "s|%HOME%|$HOME|" /etc/supervisor/conf.d/supervisord.conf
 
-# check for 'mydata' working directory
-if [ ! -d "$HOME/mydata/" ]; then
-    echo "* Not able to find $HOME/mydata/. Exiting."
+# check for working directory
+if [ ! -d "$GUI_APPLICATION_DIRECTORY" ]; then
+    echo "* Not able to find $GUI_APPLICATION_DIRECTORY. Exiting."
     exit 1
 fi
 
