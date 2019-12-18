@@ -28,7 +28,7 @@ Run the docker container and access with https://designsafe-exec-01.tacc.utexas.
 export port=59XX
 export AGAVE_JOB_OWNER=USER
 export MYDATA=/tmp #e.g. "/corral-repl/tacc/NHERI/shared/$AGAVE_JOB_OWNER"
-docker run -i --rm -p $port:6080 -e SSL_PORT=6080 -v $MYDATA:"/home/ubuntu/mydata" -e GUI_APPLICATION_DIRECTORY=/home/ubuntu/mydata  -e VNC_PASSWORD=1234 -e RESOLUTION="1080x720" --name "base_image_test_$AGAVE_JOB_OWNER"   -v /etc/pki/tls/certs/designsafe-exec-01.tacc.utexas.edu.cer:/etc/nginx/ssl/designsafe-exec-01.tacc.utexas.edu.cer -v /etc/pki/tls/private/designsafe-exec-01.tacc.utexas.edu.key:/etc/nginx/ssl/designsafe-exec-01.tacc.utexas.edu.key taccaci/docker-ubuntu-vnc-desktop-application-base:TAG
+docker run -i --rm -p $port:6080 -e SSL_PORT=6080 -v $MYDATA:"/home/ubuntu/mydata" -e GUI_APPLICATION_DIRECTORY=/home/ubuntu/mydata  -e VNC_PASSWORD=1234 -e RESOLUTION="1080x720" --name "base_image_test_$AGAVE_JOB_OWNER"   -v /etc/pki/tls/certs/designsafe-exec-01.tacc.utexas.edu.cer:/etc/nginx/ssl/nginx.crt -v /etc/pki/tls/private/designsafe-exec-01.tacc.utexas.edu.key:/etc/nginx/ssl/nginx.key taccaci/docker-ubuntu-vnc-desktop-application-base:TAG
 ```
 
 ### Screen depth
