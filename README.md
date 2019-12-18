@@ -53,6 +53,8 @@ FROM taccaci/docker-ubuntu-vnc-desktop-application-base:TAG
 COPY application.sh /
 ```
 
+Note that `application.sh` should have proper permissions set (`chmod +xr application.sh`) so the user can run it.
+
 ### Working directory of app 
 Working directory of the gui app can be set by environement varaible `GUI_APPLICATION_DIRECTORY` (default value if not set is:  `/home/ubuntu/mydata`)
 
