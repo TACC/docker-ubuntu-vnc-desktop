@@ -38,7 +38,7 @@ fi
 #     cp -r /root/{.gtkrc-2.0,.asoundrc} ${HOME}
 #     [ -d "/dev/snd" ] && chgrp -R adm /dev/snd
 # fi
-PASSWORD=designsafeubuntu1234!!
+PASSWORD=ubuntu1234!!
 USER="ubuntu"
 echo "$USER:$PASSWORD" | chpasswd
 HOME=/home/$USER
