@@ -24,24 +24,14 @@ if [ -n "$DISPLAY_SCREEN_DEPTH" ]; then
     sed -i "s/x24/x$DISPLAY_SCREEN_DEPTH/" /usr/local/bin/xvfb.sh
 fi
 
-# USER=${USER:-root}
-# HOME=/root
-# if [ "$USER" != "root" ]; then
-#     echo "* enable custom user: $USER"
-#     useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USER
-#     if [ -z "$PASSWORD" ]; then
-#         echo "  set default password to \"ubuntu\""
-#         PASSWORD=ubuntu
-#     fi
-#     HOME=/home/$USER
-#     echo "$USER:$PASSWORD" | chpasswd
-#     cp -r /root/{.gtkrc-2.0,.asoundrc} ${HOME}
-#     [ -d "/dev/snd" ] && chgrp -R adm /dev/snd
-# fi
-PASSWORD=ubuntu1234!!
-USER="ubuntu"
-echo "$USER:$PASSWORD" | chpasswd
 HOME=/home/$USER
+USER="ubuntu"
+PASSWORD=ubuntu1234!!
+groupadd --gid $APP_USER_GROUP_ID appgroup
+useradd --uid $APP_USER_ID --create-home --shell /bin/bash --user-group --groups appgroup,adm,sudo $USER && chown $USER:appgroup $HOME
+usermod -g appgroup $USER
+mkdir -p $HOME/.config/pcmanfm/LXDE/ && cp /usr/local/share/doro-lxde-wallpapers/desktop-items-0.conf $HOME/.config/pcmanfm/LXDE/ && chown -R $USER:appgroup $HOME/.config
+echo "$USER:$PASSWORD" | chpasswd
 cp -r /root/{.gtkrc-2.0,.asoundrc} ${HOME}
 [ -d "/dev/snd" ] && chgrp -R adm /dev/snd
 chown -R $USER:$USER $HOME/.[^.]*

@@ -60,3 +60,9 @@ Working directory of the gui app can be set by environement varaible `GUI_APPLIC
 mkdir temp_my_data
 docker run -p 6080:80 -e GUI_APPLICATION_DIRECTORY=/home/ubuntu/mydata -v temp_my_data:/home/ubuntu/mydata taccaci/docker-ubuntu-vnc-desktop-application-base:TAG
 ```
+
+### User and group identity
+A user ubuntu is creaed with a home of `/home/ubuntu` a uid of `458981` and a gid of `816877`. The uid and gid can be set by the environment variable APP_USER_GROUP_ID and APP_USER_ID
+```
+docker run ... -e APP_USER_GROUP_ID=12345 -e APP_USER_ID=12345 ...
+```

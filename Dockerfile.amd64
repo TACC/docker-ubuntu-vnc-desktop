@@ -116,13 +116,9 @@ ENV HOME=/home/ubuntu \
     SHELL=/bin/bash
 HEALTHCHECK --interval=30s --timeout=5s CMD curl --fail http://127.0.0.1:6079/api/health
 
-RUN groupadd --gid 816877 G-816877
-RUN useradd --uid 458981 --create-home --shell /bin/bash --user-group --groups G-816877,adm,sudo ubuntu && chown ubuntu:G-816877 /home/ubuntu
-RUN usermod -g G-816877 ubuntu
-RUN mkdir -p /home/ubuntu/.config/pcmanfm/LXDE/ && cp /usr/local/share/doro-lxde-wallpapers/desktop-items-0.conf /home/ubuntu/.config/pcmanfm/LXDE/ && chown -R ubuntu:G-816877 /home/ubuntu/.config
-
 ENV RESOLUTION="1280x800"
-
+ENV APP_USER_GROUP_ID=816877
+ENV APP_USER_ID=458981
 ENV GUI_APPLICATION_DIRECTORY=/home/ubuntu/
 
 COPY kill.py /
