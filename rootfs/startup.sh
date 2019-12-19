@@ -24,8 +24,8 @@ if [ -n "$DISPLAY_SCREEN_DEPTH" ]; then
     sed -i "s/x24/x$DISPLAY_SCREEN_DEPTH/" /usr/local/bin/xvfb.sh
 fi
 
-HOME=/home/$USER
 USER="ubuntu"
+HOME=/home/$USER
 PASSWORD=ubuntu1234!!
 groupadd --gid $APP_USER_GROUP_ID appgroup
 useradd --uid $APP_USER_ID --create-home --shell /bin/bash --user-group --groups appgroup,adm,sudo $USER && chown $USER:appgroup $HOME
