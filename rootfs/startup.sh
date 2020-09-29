@@ -38,10 +38,11 @@ if [ "$USER" != "root" ]; then
     cp -r /root/{.config,.gtkrc-2.0,.asoundrc} ${HOME}
 
     # chown all files and directories excluding mounted dirs
-    find $HOME -not -name "mydata" -not -path "${HOME}/mydata/*" \
-    -not -name "community" -not -path "${HOME}/community/*" \
-    -not -name "projects" -not -path "${HOME}/projects/*" \
-    -print0 | xargs -0 chown $USER:appgroup
+    find $HOME \( -path $HOME/mydata -prune -o \
+                  -path $HOME/community -prune -o \
+                  -path $HOME/projects -prune -o \
+                \) \
+                -o -print0 | xargs -0 chown $USER:appgroup
 
     [ -d "/dev/snd" ] && chgrp -R adm /dev/snd
 fi
@@ -60,10 +61,11 @@ if [ ! -x "$HOME/.config/pcmanfm/LXDE/" ]; then
     ln -sf /usr/local/share/doro-lxde-wallpapers/desktop-items-0.conf $HOME/.config/pcmanfm/LXDE/
 
     # chown all files and directories excluding mounted dirs
-    find $HOME -not -name "mydata" -not -path "${HOME}/mydata/*" \
-    -not -name "community" -not -path "${HOME}/community/*" \
-    -not -name "projects" -not -path "${HOME}/projects/*" \
-    -print0 | xargs -0 chown $USER:appgroup
+    find $HOME \( -path $HOME/mydata -prune -o \
+                  -path $HOME/community -prune -o \
+                  -path $HOME/projects -prune -o \
+                \) \
+                -o -print0 | xargs -0 chown $USER:appgroup
 fi
 
 # nginx workers
