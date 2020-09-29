@@ -22,9 +22,13 @@ fi
 
 USER=${USER:-root}
 HOME=/root
+USER_GROUP_ID=${USER_GROUP_ID:-1000}
+groupadd --gid $USER_GROUP_ID appgroup
+
 if [ "$USER" != "root" ]; then
     echo "* enable custom user: $USER"
-    useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USER
+    useradd --uid ${USER_ID:-1001} --create-home --shell /bin/bash --user-group --groups appgroup,adm,sudo $USER
+    usermod -g appgroup $USER
     if [ -z "$PASSWORD" ]; then
         echo "  set default password to \"ubuntu\""
         PASSWORD=ubuntu
@@ -32,7 +36,13 @@ if [ "$USER" != "root" ]; then
     HOME=/home/$USER
     echo "$USER:$PASSWORD" | chpasswd
     cp -r /root/{.config,.gtkrc-2.0,.asoundrc} ${HOME}
-    chown -R $USER:$USER ${HOME}
+
+    # chown all files and directories excluding mounted dirs
+    find $HOME -not -name "mydata" -not -path "${HOME}/mydata/*" \
+    -not -name "community" -not -path "${HOME}/community/*" \
+    -not -name "projects" -not -path "${HOME}/projects/*" \
+    -print0 | xargs -0 chown $USER:appgroup
+
     [ -d "/dev/snd" ] && chgrp -R adm /dev/snd
 fi
 sed -i -e "s|%USER%|$USER|" -e "s|%HOME%|$HOME|" /etc/supervisor/conf.d/supervisord.conf
@@ -48,7 +58,12 @@ if [ ! -x "$HOME/.config/pcmanfm/LXDE/" ]; then
     echo "* creating and configuring $HOME/.config/pcmanfm/LXDE/"
     mkdir -p $HOME/.config/pcmanfm/LXDE/
     ln -sf /usr/local/share/doro-lxde-wallpapers/desktop-items-0.conf $HOME/.config/pcmanfm/LXDE/
-    chown -R $USER:$USER $HOME
+
+    # chown all files and directories excluding mounted dirs
+    find $HOME -not -name "mydata" -not -path "${HOME}/mydata/*" \
+    -not -name "community" -not -path "${HOME}/community/*" \
+    -not -name "projects" -not -path "${HOME}/projects/*" \
+    -print0 | xargs -0 chown $USER:appgroup
 fi
 
 # nginx workers

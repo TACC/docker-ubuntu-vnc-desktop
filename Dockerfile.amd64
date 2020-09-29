@@ -125,8 +125,6 @@ ENV HOME=/home/ubuntu \
 HEALTHCHECK --interval=30s --timeout=5s CMD curl --fail http://127.0.0.1:6079/api/health
 
 ENV RESOLUTION="1280x800"
-ENV APP_USER_GROUP_ID=816877
-ENV APP_USER_ID=458981
 ENV GUI_APPLICATION_DIRECTORY=/home/ubuntu/
 
 COPY kill.py /
