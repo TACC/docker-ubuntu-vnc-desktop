@@ -41,6 +41,7 @@ if [ "$USER" != "root" ]; then
     find $HOME \( -path $HOME/mydata -prune -o \
                   -path $HOME/community -prune -o \
                   -path $HOME/projects -prune -o \
+                  -path $HOME/published -prune -o \
                 \) \
                 -o -print0 | xargs -0 chown $USER:appgroup
 
@@ -64,6 +65,7 @@ if [ ! -x "$HOME/.config/pcmanfm/LXDE/" ]; then
     find $HOME \( -path $HOME/mydata -prune -o \
                   -path $HOME/community -prune -o \
                   -path $HOME/projects -prune -o \
+                  -path $HOME/published -prune -o \
                 \) \
                 -o -print0 | xargs -0 chown $USER:appgroup
 fi
