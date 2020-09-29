@@ -6,10 +6,7 @@
 
 FROM ubuntu:20.04 as system
 
-
-
 RUN sed -i 's#http://archive.ubuntu.com/ubuntu/#mirror://mirrors.ubuntu.com/mirrors.txt#' /etc/apt/sources.list;
-
 
 # built-in packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -19,7 +16,7 @@ RUN apt update \
     && apt install -y --no-install-recommends --allow-unauthenticated \
         supervisor nginx sudo net-tools zenity xz-utils \
         dbus-x11 x11-utils alsa-utils \
-        mesa-utils libgl1-mesa-dri \
+        mesa-utils libgl1-mesa-dri xterm \
     && apt autoclean -y \
     && apt autoremove -y \
     && rm -rf /var/lib/apt/lists/*
@@ -121,9 +118,17 @@ COPY rootfs /
 RUN ln -sf /usr/local/lib/web/frontend/static/websockify /usr/local/lib/web/frontend/static/novnc/utils/websockify && \
 	chmod +x /usr/local/lib/web/frontend/static/websockify/run
 
-EXPOSE 80
+EXPOSE 6080
 WORKDIR /root
 ENV HOME=/home/ubuntu \
     SHELL=/bin/bash
 HEALTHCHECK --interval=30s --timeout=5s CMD curl --fail http://127.0.0.1:6079/api/health
+
+ENV RESOLUTION="1280x800"
+ENV APP_USER_GROUP_ID=816877
+ENV APP_USER_ID=458981
+ENV GUI_APPLICATION_DIRECTORY=/home/ubuntu/
+
+COPY kill.py /
+COPY application.sh /
 ENTRYPOINT ["/startup.sh"]

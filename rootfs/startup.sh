@@ -37,8 +37,15 @@ if [ "$USER" != "root" ]; then
 fi
 sed -i -e "s|%USER%|$USER|" -e "s|%HOME%|$HOME|" /etc/supervisor/conf.d/supervisord.conf
 
+# check for working directory
+if [ ! -d "$GUI_APPLICATION_DIRECTORY" ]; then
+    echo "* Not able to find $GUI_APPLICATION_DIRECTORY. Exiting."
+    exit 1
+fi
+
 # home folder
 if [ ! -x "$HOME/.config/pcmanfm/LXDE/" ]; then
+    echo "* creating and configuring $HOME/.config/pcmanfm/LXDE/"
     mkdir -p $HOME/.config/pcmanfm/LXDE/
     ln -sf /usr/local/share/doro-lxde-wallpapers/desktop-items-0.conf $HOME/.config/pcmanfm/LXDE/
     chown -R $USER:$USER $HOME
@@ -48,10 +55,15 @@ fi
 sed -i 's|worker_processes .*|worker_processes 1;|' /etc/nginx/nginx.conf
 
 # nginx ssl
-if [ -n "$SSL_PORT" ] && [ -e "/etc/nginx/ssl/nginx.key" ]; then
-    echo "* enable SSL"
-	sed -i 's|#_SSL_PORT_#\(.*\)443\(.*\)|\1'$SSL_PORT'\2|' /etc/nginx/sites-enabled/default
-	sed -i 's|#_SSL_PORT_#||' /etc/nginx/sites-enabled/default
+if [ -n "$SSL_PORT" ]; then
+    if [ -e '/etc/nginx/ssl/nginx.crt' -a -e '/etc/nginx/ssl/nginx.key' ]; then
+        echo "* enabling SSL"
+    else
+	echo "enabling SSL failed as /etc/nginx/ssl/nginx.crt and/or /etc/nginx/ssl/nginx.key  were not found!"
+	exit 1
+    fi
+    sed -i 's|#_SSL_PORT_#\(.*\)443\(.*\)|\1'$SSL_PORT'\2|' /etc/nginx/sites-enabled/default
+    sed -i 's|#_SSL_PORT_#||' /etc/nginx/sites-enabled/default
 fi
 
 # nginx http base authentication
