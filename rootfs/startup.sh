@@ -42,6 +42,7 @@ if [ "$USER" != "root" ]; then
                   -path $HOME/community -prune -o \
                   -path $HOME/projects -prune -o \
                   -path $HOME/published -prune -o \
+                  -path $HOME/public -prune \
                 \) \
                 -o -print0 | xargs -0 chown $USER:appgroup
 
@@ -66,6 +67,7 @@ if [ ! -x "$HOME/.config/pcmanfm/LXDE/" ]; then
                   -path $HOME/community -prune -o \
                   -path $HOME/projects -prune -o \
                   -path $HOME/published -prune -o \
+                  -path $HOME/public -prune \
                 \) \
                 -o -print0 | xargs -0 chown $USER:appgroup
 fi
