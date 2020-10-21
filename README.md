@@ -1,7 +1,7 @@
 docker-ubuntu-vnc-desktop-application-base
 =========================
 
-Base docker image (HTML5 VNC interface to access Ubuntu 16.04 LXDE desktop environment) for applications. This image is used by interactive/gui applications.  Details on how to use this image to create an application can be found in [below](#use-base-image-to-create-an-application).
+Base docker image (HTML5 VNC interface to access Ubuntu 20.04 LXDE desktop environment) for applications. This image is used by interactive/gui applications.  Details on how to use this image to create an application can be found in [below](#use-base-image-to-create-an-application).
 
 
 Fork of https://github.com/fcwu/docker-ubuntu-vnc-desktop
