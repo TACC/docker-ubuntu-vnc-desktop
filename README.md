@@ -66,5 +66,5 @@ docker run -p 6080:80 -e GUI_APPLICATION_DIRECTORY=/home/ubuntu/mydata -v temp_m
 ### User and group identity
 A user ubuntu is created with a home of `/home/ubuntu`. The uid (default: `-1001`) and gid (default: `-1000` can be set by the environment variable USER_GROUP_ID and USER_ID.
 ```
-docker run ... -e APP_USER_GROUP_ID=12345 -e APP_USER_ID=12345 ...
+docker run ... -e USER_GROUP_ID=12345 -e USER_ID=12345 ...
 ```
