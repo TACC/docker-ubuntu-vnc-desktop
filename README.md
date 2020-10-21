@@ -33,7 +33,7 @@ docker run -i --rm -p $port:6080 -e SSL_PORT=6080 -v $MYDATA:"/home/ubuntu/mydat
 
 ### Screen depth
 
-DISPLAY_SCREEN_DEPTH (i.e.`-e DISPLAY_SCREEN_DEPTH=24`) can be used to change the color depth which defaults to 16
+DISPLAY_SCREEN_DEPTH (i.e.`-e DISPLAY_SCREEN_DEPTH=16`) can be used to change the color depth which defaults to 24
 
 ### Dockerhub
 
